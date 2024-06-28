@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 
 const userResolver = {
   Query: {
-    authUsers: async (_, _, context) => {
+    authUser: async (_, __, context) => {
       try {
         const user = await context.getUser();
         return user;
@@ -77,7 +77,7 @@ const userResolver = {
         throw new Error(err.message || "Internal server error");
       }
     },
-    logout: async (_, _, context) => {
+    logout: async (_, __, context) => {
       try {
         await context.logout();
         req.session.destory((err) => {
