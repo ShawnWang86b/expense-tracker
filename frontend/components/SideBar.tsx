@@ -15,7 +15,7 @@ const SideBar = ({ className }: Props) => {
         className
       )}
     >
-      <div className="mt-5">
+      <div className="mt-32">
         <SidebarItem
           Icon={LayoutDashboard}
           label={"Dashboard"}
