@@ -125,6 +125,12 @@ const HomePage = () => {
           {loading && (
             <div className="w-6 h-6 border-t-2 border-b-2 mx-2 rounded-full animate-spin"></div>
           )}
+
+          <div className="bg-gray-100 flex items-center justify-center h-screen">
+            <div className="relative w-64 h-32 mt-10 mx-auto">
+              <div className="   border-t-[100px] border-t-[red] border-l-[50px] border-l-transparent border-r-[50px] border-r-transparent  "></div>
+            </div>
+          </div>
         </div>
         <div className="flex flex-wrap w-full justify-center items-center gap-6">
           {data?.categoryStatistics.length > 0 && (
