@@ -11,7 +11,7 @@ const SideBar = ({ className }: Props) => {
   return (
     <aside
       className={cn(
-        "flex bg-[#0b150a] h-full lg:w-[256px] lg:fixed left-0 top-0 px-6 broder-r-2 flex-col justify-between",
+        "flex bg-bgDark h-full lg:w-[256px] lg:fixed left-0 top-0 px-6 broder-r-2 flex-col justify-between",
         className
       )}
     >

@@ -11,6 +11,10 @@ export default function Home() {
       <Button onClick={() => router.push("/dashboard")}>
         Nav to Dashboard
       </Button>
+
+      <Button onClick={() => router.push("/sign-in")}>Sign in</Button>
+
+      <Button onClick={() => router.push("/sign-up")}>Sign up</Button>
     </div>
   );
 }

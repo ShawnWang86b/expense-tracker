@@ -8,7 +8,7 @@ const MobileSideBar = () => {
     <div>
       <Sheet>
         <SheetTrigger>
-          <Menu className="text-white" />
+          <Menu className="text-textLight" />
         </SheetTrigger>
         <SheetContent className="p-0 z-[100]" side="left">
           <SideBar />

@@ -1,61 +1,70 @@
-import SideBar from "@/components/SideBar";
 import React from "react";
-import { CarTaxiFront, ShoppingBag, Zap, Bus } from "lucide-react";
+import {
+  ShoppingBag,
+  Zap,
+  Bus,
+  TvMinimalPlay,
+  ChevronsRight,
+  CirclePlus,
+  Trash2,
+} from "lucide-react";
 import SpendCard from "@/components/SpendCard";
+import HistoryCard from "@/components/HistoryCard";
+import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
   return (
     <article className="p-4">
-      <div className="text-[#fafbf9] text-2xl font-semibold my-8">
+      <div className="text-textLight text-2xl font-semibold my-8">
         Dashboard
       </div>
       <div className="flex gap-4">
         <SpendCard
           Icon={Bus}
-          iconColor={`bg-[#c6b2e5]`}
+          iconColor={`bg-themePrimary`}
           label={"Commute"}
           spend={50}
         />
         <SpendCard
           Icon={ShoppingBag}
-          iconColor={`bg-[#de442c]`}
+          iconColor={`bg-themeDanger`}
           label={"Shopping"}
           spend={240}
         />
         <SpendCard
           Icon={Zap}
-          iconColor={`bg-[#fcaf2f]`}
+          iconColor={`bg-themeWarning`}
           label={"Energy"}
           spend={150}
         />
+        <SpendCard
+          Icon={TvMinimalPlay}
+          iconColor={`bg-themeSecondary`}
+          label={"Entertainment"}
+          spend={250}
+        />
       </div>
 
-      {/* <section>
-            Spend cards
-            1. can select/ pin 3 card, display here.
-          </section>
-          <section>Expense statics</section>
-          <section>
-            History
-            0. transition detials: for example: taxi
-            1. transation: this is types, for example, commute, rent, home loan, groceries, etc
-            2. income/outcome types
-            3. amounts
-            4. Date
-            5. location, optional
-          </section> */}
+      <div className="w-[930px] bg-bgDark h-[600px] rounded-md shadow-md mt-10 px-8 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="text-textLight text-2xl font-semibold">History</div>
+          <div className="flex gap-2">
+            <Button variant="sidebarOutline">
+              Add New
+              <CirclePlus size="sm" className="ml-2" />
+            </Button>
+            <Button variant="sidebar" className="text-themePrimary ">
+              View All <ChevronsRight size="sm" className="ml-2" />
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <HistoryCard />
+          <HistoryCard />
+        </div>
+      </div>
     </article>
   );
 };
 
 export default Dashboard;
-
-// history card
-// expense statistic bar chart
-// card
-
-// #0B150A
-
-// #010101
-
-// #16161A

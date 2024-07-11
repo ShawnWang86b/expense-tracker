@@ -10,7 +10,7 @@ type Props = {
 
 const SpendCard = ({ Icon, iconColor, label, spend }: Props) => {
   return (
-    <div className="bg-[#0b150a] h-[150px] w-[220px] rounded-md text-[#fafbf9] relative p-4 shadow-md">
+    <div className="bg-bgDark h-[150px] w-[220px] rounded-md text-textLight relative p-4 shadow-md">
       <div
         className={cn(
           "h-10 w-10 absolute top-5 left-8 rotate-17 rounded-md z-0",

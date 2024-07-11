@@ -22,6 +22,12 @@ const config = {
         "17": "17deg",
       },
       colors: {
+        themePrimary: "#c6b2e5",
+        themeSecondary: "#b5ebbb",
+        themeDanger: "#c74834",
+        themeWarning: "#fcaf2f",
+        bgDark: "#0b150a",
+        textLight: "#fafbf9",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
