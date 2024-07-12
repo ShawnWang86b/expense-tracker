@@ -26,13 +26,13 @@ const userResolver = {
   Mutation: {
     signUp: async (_, { input }, context) => {
       try {
-        const { username, name, password, gender } = input;
-        if (!username || !name || !password || !gender) {
+        const { email, username, password } = input;
+        if (!email || !username || !password) {
           throw new Error("All fields are required");
         }
 
         // First step: check whether username existed
-        const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
           throw new Error("User already exists");
         }
@@ -46,11 +46,10 @@ const userResolver = {
         const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
         const newUser = new User({
+          email,
           username,
-          name,
           password: hashedPassword,
-          gender,
-          profilePicture: gender === "male" ? boyProfilePic : girlProfilePic,
+          profilePicture: boyProfilePic,
         });
 
         await newUser.save();
@@ -63,10 +62,10 @@ const userResolver = {
     },
     login: async (_, { input }, context) => {
       try {
-        const { username, password } = input;
-        if (!username || !password) throw new Error("All fields are required");
+        const { email, password } = input;
+        if (!email || !password) throw new Error("All fields are required");
         const { user } = await context.authenticate("graphql-local", {
-          username,
+          email,
           password,
         });
 
