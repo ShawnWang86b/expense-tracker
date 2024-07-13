@@ -1,4 +1,5 @@
 import MobileHeader from "@/components/MobileHeader";
+import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 
 export default function DashboardLayout({
@@ -11,7 +12,8 @@ export default function DashboardLayout({
       <MobileHeader />
       <SideBar className="hidden lg:flex" />
       <main className="lg:pl-[256px] h-full pt-[50px] lg:pt-0">
-        <div className="bg-[#273127] h-screen">{children}</div>
+        <NavBar />
+        <div className="h-screen">{children}</div>
       </main>
     </>
   );

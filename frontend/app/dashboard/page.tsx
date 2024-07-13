@@ -11,14 +11,46 @@ import {
 import SpendCard from "@/components/SpendCard";
 import HistoryCard from "@/components/HistoryCard";
 import { Button } from "@/components/ui/button";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 const Dashboard = () => {
   return (
     <article className="p-4">
-      <div className="text-textLight text-2xl font-semibold my-8">
-        Dashboard
-      </div>
-      <div className="flex gap-4">
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="min-h-[200px] rounded-lg border"
+      >
+        <ResizablePanel defaultSize={60}>
+          <div className="flex h-full items-center justify-center p-6">
+            <span className="font-semibold">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-2xl font-semibold">History</div>
+                <div className="flex gap-2">
+                  <Button className="flex justify-start h-[44px] w-full mt-2 bg-themePrimary">
+                    <CirclePlus className="mr-5" />
+                    Add New
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <HistoryCard />
+                <HistoryCard />
+              </div>
+            </span>
+          </div>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={40}>
+          <div className="flex h-full items-center justify-center p-6">
+            <span className="font-semibold">Content</span>
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+      {/* <div className="flex gap-4">
         <SpendCard
           Icon={Bus}
           iconColor={`bg-themePrimary`}
@@ -43,26 +75,7 @@ const Dashboard = () => {
           label={"Entertainment"}
           spend={250}
         />
-      </div>
-
-      <div className="w-[930px] bg-bgDark h-[600px] rounded-md shadow-md mt-10 px-8 py-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="text-textLight text-2xl font-semibold">History</div>
-          <div className="flex gap-2">
-            <Button variant="sidebarOutline">
-              Add New
-              <CirclePlus size="sm" className="ml-2" />
-            </Button>
-            <Button variant="sidebar" className="text-themePrimary ">
-              View All <ChevronsRight size="sm" className="ml-2" />
-            </Button>
-          </div>
-        </div>
-        <div className="flex flex-col gap-1">
-          <HistoryCard />
-          <HistoryCard />
-        </div>
-      </div>
+      </div> */}
     </article>
   );
 };

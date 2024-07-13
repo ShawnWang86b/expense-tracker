@@ -1,7 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, BarChart3, LogOut } from "lucide-react";
+import {
+  LayoutDashboard,
+  BarChart3,
+  Settings,
+  FolderClock,
+  Heart,
+  LogOut,
+} from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { useMutation } from "@apollo/client";
 import { LOGOUT } from "@/graphql/mutations/user.mutation";
@@ -13,6 +20,7 @@ const SideBar = ({ className }: Props) => {
   const [logout, { loading, client }] = useMutation(LOGOUT, {
     refetchQueries: ["GetAuthenticatedUser"],
   });
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -26,7 +34,7 @@ const SideBar = ({ className }: Props) => {
   return (
     <aside
       className={cn(
-        "flex bg-bgDark h-full lg:w-[256px] lg:fixed left-0 top-0 px-6 broder-r-2 flex-col justify-between",
+        "flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-6 border-r-[1px] border-slate-200 flex-col justify-between bg-muted",
         className
       )}
     >
@@ -37,6 +45,9 @@ const SideBar = ({ className }: Props) => {
           href="/dashboard"
         />
         <SidebarItem Icon={BarChart3} label={"Statistic"} href="/statistic" />
+        <SidebarItem Icon={FolderClock} label={"History"} href="/history" />
+        <SidebarItem Icon={Heart} label={"Wishlist"} href="/wish-list" />
+        <SidebarItem Icon={Settings} label={"Settings "} href="/settings " />
       </div>
       <div className="mb-10" onClick={handleLogout}>
         <SidebarItem Icon={LogOut} label={"Logout"} href="/sign-in" />

@@ -22,7 +22,7 @@ const config = {
         "17": "17deg",
       },
       colors: {
-        themePrimary: "#c6b2e5",
+        themePrimary: "#9f75e0",
         themeSecondary: "#b5ebbb",
         themeDanger: "#c74834",
         themeWarning: "#fcaf2f",

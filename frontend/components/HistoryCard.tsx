@@ -1,19 +1,33 @@
-import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { Pen, Trash2 } from "lucide-react";
 
 const HistoryCard = ({}) => {
   return (
-    <div className="bg-bgDark text-textLight flex items-center justify-evenly w-[870px] h-[50px] gap-5 rounded-md shadow-md after:border-r-8 after:border-red-300 relative">
-      <div className="absolute right-0 top-0 h-full w-[8px] bg-themeDanger"></div>
-      <Image src="/coles.png" alt="anz" width="40" height="40" />
-      <div>Home loan</div>
-      {/* <div>payment type</div> */}
-      <div>monthly expense</div>
-      <div>1000</div>
-      <div>Glen Waverley</div>
-      <div>2024-06-23</div>
-      <div className="cursor-pointer">
-        <Trash2 />
+    <div className="flex flex-col gap-2 text-sm items-start rounded-lg shadow-md border-[1px] p-3 bg-muted cursor-pointer">
+      <div className="flex justify-between w-full">
+        <div className="font-semibold">Home loan</div>
+        <div className="ml-auto text-xs text-foreground">2024-06-23</div>
+      </div>
+
+      <div className="text-xs font-medium">1000</div>
+      <div className="line-clamp-2 text-xs text-muted-foreground">
+        {` Hi, let's have a meeting tomorrow to discuss the project. I've been
+        reviewing the project details and have some ideas I'd like to share.
+        It's crucial that we align on our next steps to ensure the project's
+        success. Please come prepared with any questions or insights you may
+        have. Looking forward to`}
+      </div>
+
+      <div className="flex justify-between items-center w-full gap-2 cursor-pointer mt-2">
+        <div className="flex item-center justify-center gap-2">
+          <span className="rounded-lg px-2.5 py-0.5 bg-[#18181b] text-xs text-primary-foreground font-semibold hover:bg-[#18181b]/80 shadow">
+            waily
+          </span>
+          <span>budget</span>
+        </div>
+        <div className="flex gap-2">
+          <Pen />
+          <Trash2 className="text-themeDanger" />
+        </div>
       </div>
     </div>
   );
