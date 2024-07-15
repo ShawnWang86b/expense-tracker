@@ -87,3 +87,30 @@
 .animate-marquee {
   animation: marquee var(--marquee-duration) linear infinite;
 }
+
+.scroll-container {
+  overflow: auto; /* Allow scrollbar to always take space */
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the tracking area */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent; /* transparent scrollbar thumb */
+  border-radius: 10px; /* roundness of the scroll thumb */
+  border: 3px solid #f1f1f1; /* creates padding around the scroll thumb */
+  transition: background-color 0.3s ease; /* smooth transition */
+}
+
+.scroll-container:hover::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb; /* color of the scroll thumb on hover */
+}
+
+.scroll-container:hover::-webkit-scrollbar-thumb:hover {
+  background-color: #e5e7eb; /* color of the scroll thumb when hovered */
+}

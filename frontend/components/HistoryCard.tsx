@@ -20,13 +20,13 @@ const HistoryCard = ({}) => {
       <div className="flex justify-between items-center w-full gap-2 cursor-pointer mt-2">
         <div className="flex item-center justify-center gap-2">
           <span className="rounded-lg px-2.5 py-0.5 bg-[#18181b] text-xs text-primary-foreground font-semibold hover:bg-[#18181b]/80 shadow">
-            waily
+            daily
           </span>
           <span>budget</span>
         </div>
         <div className="flex gap-2">
-          <Pen />
-          <Trash2 className="text-themeDanger" />
+          <Pen className="h-5 w-5" />
+          <Trash2 className="text-themeDanger h-5 w-5" />
         </div>
       </div>
     </div>
