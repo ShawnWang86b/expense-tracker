@@ -5,7 +5,6 @@ export const CREATE_TRANSACTION = gql`
     createTransaction(input: $input) {
       _id
       description
-      paymentType
       category
       amount
       location
@@ -19,7 +18,6 @@ export const UPDATE_TRANSACTION = gql`
     updateTransaction(input: $input) {
       _id
       description
-      paymentType
       category
       amount
       location
@@ -32,7 +30,6 @@ export const DELETE_TRANSACTION = gql`
     deleteTransaction(transactionId: $transactionId) {
       _id
       description
-      paymentType
       category
       amount
       location

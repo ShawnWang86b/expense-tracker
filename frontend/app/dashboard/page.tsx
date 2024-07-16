@@ -54,8 +54,8 @@ const Dashboard = () => {
                   Transaction Details
                 </div>
               </div>
-              {/* <TransactionForm /> */}
-              <TansactionDetails />
+              <TransactionForm />
+              {/* <TansactionDetails /> */}
             </div>
           </div>
         </ResizablePanel>

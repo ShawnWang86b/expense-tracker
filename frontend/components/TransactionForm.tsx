@@ -32,38 +32,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CREATE_TRANSACTION } from "@/graphql/mutations/transaction.mutation";
+import { useMutation } from "@apollo/client";
 
 const formSchema = z.object({
-  amount: z.string(),
+  amount: z
+    .string({ required_error: "Please input the amount." })
+    .refine((val) => !isNaN(parseFloat(val)), {
+      message: "Amount must be a number.",
+    })
+    .transform((val) => parseFloat(val)),
   location: z.string().min(2).max(50),
   description: z
     .string()
-    .min(10, {
-      message: "Bio must be at least 10 characters.",
+    .min(1, {
+      message: "Description must be at least 10 characters.",
     })
-    .max(160, {
-      message: "Bio must not be longer than 30 characters.",
+    .max(200, {
+      message: "Description must not be longer than 200 letters.",
     }),
   category: z.string(),
-  date: z.string(),
+  date: z
+    .date({
+      required_error: "A date of transaction is required.",
+    })
+    .default(new Date()),
 });
 
 const TransactionForm = () => {
+  const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
+    refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      amount: "",
-      location: "",
-      description: "",
-      category: "",
-      date: "",
-    },
+    // defaultValues: {
+    //   amount: "",
+    //   location: "",
+    //   description: "",
+    //   category: "",
+    //   date: new Date(),
+    // },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-  }
+    try {
+      await createTransaction({ variables: { input: values } });
+
+      form.reset();
+      console.log("Transaction created successfully");
+    } catch (error) {
+      console.log("create Transaction error");
+    }
+  };
   return (
     <div className="p-3 ">
       <Form {...form}>
@@ -132,18 +154,17 @@ const TransactionForm = () => {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a category of transaction to display" />
+                      <SelectValue placeholder="Select a category of transaction" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="m@example.com">Home loan</SelectItem>
-                    <SelectItem value="m@google.com">Grocery</SelectItem>
-                    <SelectItem value="m@support.com">Train fee</SelectItem>
+                    <SelectItem value="saving">Saving</SelectItem>
+                    <SelectItem value="expense">Expense</SelectItem>
+                    <SelectItem value="investment">Investment</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  You can manage email addresses in your{" "}
-                  <Link href="/examples/forms">email settings</Link>.
+                  This is your transaction types
                 </FormDescription>
                 <FormMessage />
               </FormItem>
