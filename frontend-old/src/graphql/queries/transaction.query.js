@@ -5,7 +5,6 @@ export const GET_TRANSACTIONS = gql`
     transactions {
       _id
       description
-      paymentType
       category
       amount
       location
@@ -19,7 +18,6 @@ export const GET_TRANSACTION = gql`
     transaction(transactionId: $id) {
       _id
       description
-      paymentType
       category
       amount
       location

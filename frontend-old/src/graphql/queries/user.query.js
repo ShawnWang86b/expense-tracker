@@ -22,7 +22,6 @@ export const GET_USER_AND_TRANSACTIONS = gql`
       transactions {
         _id
         description
-        paymentType
         category
         amount
         location

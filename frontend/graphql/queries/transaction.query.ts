@@ -23,7 +23,6 @@ export const GET_TRANSACTION = gql`
       location
       date
       user {
-        name
         username
         profilePicture
       }
