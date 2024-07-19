@@ -1,7 +1,6 @@
 "use client";
 
 import { z } from "zod";
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
+import { useToast } from "@/components/ui/use-toast";
 import {
   Popover,
   PopoverContent,
@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Send } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -60,36 +60,33 @@ const formSchema = z.object({
 });
 
 const TransactionForm = () => {
+  const { toast } = useToast();
   const [createTransaction, { loading }] = useMutation(CREATE_TRANSACTION, {
     refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
   });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    // defaultValues: {
-    //   amount: "",
-    //   location: "",
-    //   description: "",
-    //   category: "",
-    //   date: new Date(),
-    // },
   });
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
     try {
       await createTransaction({ variables: { input: values } });
-
       form.reset();
-      console.log("Transaction created successfully");
+      toast({
+        description: "Transaction created successfully.",
+      });
     } catch (error) {
-      console.log("create Transaction error");
+      toast({
+        description: "Create Transaction error",
+      });
     }
   };
+
   return (
-    <div className="p-3 ">
+    <div className="p-3 w-[80%]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="amount"
@@ -97,7 +94,7 @@ const TransactionForm = () => {
               <FormItem>
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input placeholder="300" {...field} />
+                  <Input placeholder="AU$300" {...field} autoComplete="off" />
                 </FormControl>
                 <FormDescription>
                   This is your transaction amount.
@@ -113,7 +110,11 @@ const TransactionForm = () => {
               <FormItem>
                 <FormLabel>Location</FormLabel>
                 <FormControl>
-                  <Input placeholder="Melbourne Central" {...field} />
+                  <Input
+                    placeholder="Melbourne Central"
+                    {...field}
+                    autoComplete="off"
+                  />
                 </FormControl>
                 <FormDescription>
                   This is your transction happend place.
@@ -214,7 +215,16 @@ const TransactionForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Confirm</Button>
+
+          <div className="flex">
+            <Button
+              type="submit"
+              className="flex justify-start h-[44px] w-[150px] text-sm bg-themePrimary hover:bg-themePrimary/80"
+            >
+              <Send className="mr-2 w-5 h-5" />
+              <div className="pl-2">Confirm</div>
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

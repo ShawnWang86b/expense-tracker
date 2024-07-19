@@ -1,13 +1,6 @@
 "use client";
-import {
-  ShoppingBag,
-  Zap,
-  Bus,
-  TvMinimalPlay,
-  ChevronsRight,
-  CirclePlus,
-  Trash2,
-} from "lucide-react";
+
+import { CirclePlus } from "lucide-react";
 import SpendCard from "@/components/SpendCard";
 import HistoryCard from "@/components/HistoryCard";
 import { Button } from "@/components/ui/button";
@@ -18,29 +11,25 @@ import {
 } from "@/components/ui/resizable";
 import TransactionForm from "@/components/TransactionForm";
 import TansactionDetails from "@/components/TansactionDetails";
-import {
-  GET_AUTHENTICATED_USER,
-  GET_USER_AND_TRANSACTIONS,
-} from "@/graphql/queries/user.query";
-import {
-  GET_TRANSACTIONS,
-  GET_TRANSACTION,
-  GET_TRANSACTION_STATISTICS,
-} from "@/graphql/queries/transaction.query";
+import { GET_TRANSACTIONS } from "@/graphql/queries/transaction.query";
 import { useQuery } from "@apollo/client";
-import { format } from "date-fns";
 import { useState } from "react";
+import TransactionUpdateForm from "@/components/TransactionUpdateForm";
+import DeleteCard from "@/components/DeleteCard";
+
 enum ViewStatus {
   AddNew,
   Edit,
   Delete,
   History,
 }
+
 const Dashboard = () => {
   const [currentStatus, setCurrentStatus] = useState<ViewStatus | null>(null);
+  const [currentTransactionId, setCurrentTransactionId] = useState("");
   const [transactionDetail, setTransactionDetail] = useState({});
   const { data, loading } = useQuery(GET_TRANSACTIONS);
-  console.log("currentStatus", currentStatus);
+  console.log("data", data);
   if (!data) {
     return <div>no data</div>;
   }
@@ -72,15 +61,28 @@ const Dashboard = () => {
   const handleDelete = () => {
     setCurrentStatus(ViewStatus.Delete);
   };
-
+  const renderTitle = () => {
+    switch (currentStatus) {
+      case ViewStatus.AddNew:
+        return <div>Create new Transaction</div>;
+      case ViewStatus.Edit:
+        return <div>Edit Transaction</div>;
+      case ViewStatus.Delete:
+        return <div>Delete a Transaction</div>;
+      case ViewStatus.History:
+        return <div>Transaction Detail</div>;
+      default:
+        return null;
+    }
+  };
   const renderContent = () => {
     switch (currentStatus) {
       case ViewStatus.AddNew:
         return <TransactionForm />;
       case ViewStatus.Edit:
-        return <div>Edit Component</div>;
+        return <TransactionUpdateForm id={currentTransactionId} />;
       case ViewStatus.Delete:
-        return <div>Delete Component</div>;
+        return <DeleteCard id={currentTransactionId} />;
       case ViewStatus.History:
         return <TansactionDetails data={transactionDetail} />;
       default:
@@ -93,18 +95,18 @@ const Dashboard = () => {
         direction="horizontal"
         className="min-h-[200px] rounded-lg border"
       >
-        <ResizablePanel defaultSize={60}>
-          <div className="flex h-full items-start">
-            <div>
-              <div className="flex items-center justify-between mb-4 mt-2 border-b-[1px] border-slate-200 w-full py-2 px-4">
+        <ResizablePanel defaultSize={70}>
+          <div className="flex h-full items-start w-full">
+            <div className="w-full">
+              <div className="flex items-center justify-between mb-4 mt-2 border-b-[1px] border-slate-200 py-2 px-4">
                 <div className="text-xl font-bold">History</div>
-                <div className="flex gap-2">
+                <div className="flex">
                   <Button
-                    className="flex justify-start h-[44px] w-full text-sm bg-themePrimary"
+                    className="flex justify-start h-[44px] w-[150px] text-sm bg-themePrimary hover:bg-themePrimary/80"
                     onClick={handleAddNew}
                   >
                     <CirclePlus className="mr-2 w-5 h-5" />
-                    Add New
+                    <div className="pl-2">Add New</div>
                   </Button>
                 </div>
               </div>
@@ -121,13 +123,15 @@ const Dashboard = () => {
                       location={transaction.location}
                       description={transaction.description}
                       category={transaction.category}
-                      date={new Date(transaction.date)}
+                      date={transaction.date}
                       handleEdit={(e: any) => {
                         e.stopPropagation();
+                        setCurrentTransactionId(transaction._id);
                         handleEdit();
                       }}
                       handleDelete={(e: any) => {
                         e.stopPropagation();
+                        setCurrentTransactionId(transaction._id);
                         handleDelete();
                       }}
                     />
@@ -138,17 +142,15 @@ const Dashboard = () => {
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={40}>
+        <ResizablePanel defaultSize={30}>
           <div className="flex h-full items-start">
-            <div>
+            <div className="w-full">
               <div className="flex items-center justify-between mb-4 border-b-[1px] border-slate-200 pt-4 px-4 ">
                 <div className="text-xl font-bold h-[44px] mt-2">
-                  Transaction Details
+                  {renderTitle()}
                 </div>
               </div>
-              {/* <TransactionForm /> */}
-              {renderContent()}
-              {/* {openStatus && <TansactionDetails data={transactionDetail} />} */}
+              <div className="p-2">{renderContent()}</div>
             </div>
           </div>
         </ResizablePanel>
